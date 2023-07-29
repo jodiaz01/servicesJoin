@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:services_joined/firebase_options.dart';
 import 'package:services_joined/provider/firebase/crud_fire_post.dart';
+import 'package:services_joined/provider/poster/post_provide.dart';
 import 'package:services_joined/provider/theme/theme.dart';
 import 'package:services_joined/provider/user/detail_profile_provider.dart';
 import 'package:services_joined/provider/user/register_provider.dart';
@@ -13,7 +14,6 @@ import 'package:services_joined/src/view/home/home_page_view.dart';
 import 'package:services_joined/src/view/login/login_view.dart';
 import 'package:services_joined/src/view/login/register_view.dart';
 import 'package:services_joined/src/view/profile/perfil_view.dart';
-import 'package:services_joined/src/view/profile/watch_profiles_view.dart';
 
 import 'provider/firebase/crud_fire_user.dart';
 
@@ -45,6 +45,7 @@ class ServiceJoined extends StatelessWidget {
     return MultiProvider(providers: [
       ChangeNotifierProvider(lazy: true, create: (_) => RegisterFormProvider()),
       ChangeNotifierProvider(lazy: true, create: (_) => DetailsFormProvider()),
+      ChangeNotifierProvider(lazy: true, create: (_) => PostFormProvider()),
       ChangeNotifierProvider( create: (_) => FirebaseProvider()),
       ChangeNotifierProvider( create: (_) => FirebasePost()),
       // ChangeNotifierProvider( create: (_) => SliderModelProvider()),

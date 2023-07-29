@@ -49,13 +49,13 @@ void dispose() {
               aspectRatio: _controller.value.aspectRatio,
               child: VideoPlayer(_controller),
             )
-                : CircularProgressIndicator(),
+                : const CircularProgressIndicator(),
           ),
 
        Row(
          mainAxisAlignment: MainAxisAlignment.center,
          children: [
-           Text(formatDuration(_controller.value.duration), style: TextStyle(color: Colors.white),),
+           Text(formatDuration(_controller.value.duration), style: const TextStyle(color: Colors.white),),
            FloatingActionButton(
              mini: true,
             elevation: 0,
