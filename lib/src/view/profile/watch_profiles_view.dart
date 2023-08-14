@@ -9,7 +9,6 @@ import 'package:ServiPro/src/widget/custom_subtitle.dart';
 import 'package:ServiPro/src/widget/customappbar.dart';
 import 'package:ServiPro/src/widget/custon_elevateButton.dart';
 import 'package:ServiPro/src/widget/slide_widget/format_slide_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class WachtProfileView extends StatelessWidget {
   const WachtProfileView({super.key, this.userP});

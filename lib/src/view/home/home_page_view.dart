@@ -4,19 +4,15 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:ServiPro/provider/firebase/crud_fire_user.dart';
 import 'package:ServiPro/provider/theme/theme.dart';
-import 'package:ServiPro/shared/whatsapp_msg.dart';
 import 'package:ServiPro/src/utils/appcolor.dart';
 import 'package:ServiPro/src/utils/datauser_comun.dart';
 import 'package:ServiPro/src/view/profile/watch_profiles_view.dart';
 import 'package:ServiPro/src/widget/aguila_container.dart';
 import 'package:ServiPro/src/widget/animate_bottonav.dart';
 import 'package:ServiPro/src/widget/customappbar.dart';
-import 'package:ServiPro/src/widget/custon_elevateButton.dart';
 import 'package:ServiPro/src/widget/postcard/custom_post.dart';
 import 'package:ServiPro/src/widget/team_creator.dart';
 
@@ -192,28 +188,6 @@ class HomePageView extends StatelessWidget {
       );
   }
 
-  // InstagramPostCard buildInstagramPostCard(
-  //     e, ThemeSetting themeprovider, BuildContext context) {
-  //   return InstagramPostCard(
-  //       username: e['nombre'],
-  //       title: e['titulo'],
-  //       caption: e['descripcion'],
-  //       imageUrl:
-  //           e['img'].isNotEmpty ? e['img'] : ['https://fakeimg.pl/600x400'],
-  //       colorbtn: themeprovider.currentTheme.primaryColor,
-  //       avatar: e['avatar'].isNotEmpty
-  //           ? e['avatar'].last
-  //           : 'https://fakeimg.pl/600x400',
-  //       precio: double.parse(e['costo'].toString()),
-  //       onTap: () async {
-  //         Navigator.push(
-  //             context,
-  //             MaterialPageRoute(
-  //                 builder: (context) => WachtProfileView(
-  //                       userP: '${e["usuario"]}',
-  //                     )));
-  //       });
-  // }
 
   SingleChildScrollView buildSingleChildScrollView(
       FirebaseProvider dataUser,

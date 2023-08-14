@@ -19,8 +19,8 @@ class InstagramPostCard extends StatefulWidget {
   // final String estado;
   bool isFollower ;
 
-  InstagramPostCard(
-      {required this.username,
+   InstagramPostCard(
+      {super.key, required this.username,
       required this.title,
       required this.caption,
       required this.imageUrl,
@@ -43,7 +43,7 @@ class _InstagramPostCardState extends State<InstagramPostCard> {
   Widget build(BuildContext context) {
     final postProvider = Provider.of<FirebasePost>(context);
 
-    final screenSize = MediaQuery.of(context).size;
+  //  final screenSize = MediaQuery.of(context).size;
     return   buildCardPostByAlcances(context, postProvider);
   }
 
@@ -52,7 +52,7 @@ class _InstagramPostCardState extends State<InstagramPostCard> {
           color: widget.colorbtn.withOpacity(0.2),
           // height: screenSize.height * .756,
           elevation: 0.0,
-          margin: EdgeInsets.only(left: 4),
+          margin: const EdgeInsets.only(left: 4),
           // margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -199,7 +199,7 @@ class _InstagramPostCardState extends State<InstagramPostCard> {
                       text: 'sequir',
                     )
                   else
-                    SizedBox(),
+                    const SizedBox(),
                   // Botón de Comentario
                   CustomElevateButton(
                     color: widget.colorbtn,
@@ -226,7 +226,7 @@ class _InstagramPostCardState extends State<InstagramPostCard> {
                   ),
                 ],
               ),
-              Divider(
+              const Divider(
                 color: Colors.black26,
               )
             ],

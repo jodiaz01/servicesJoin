@@ -115,8 +115,7 @@ class FirebasePost extends ChangeNotifier {
         notifyListeners();
       return dataPost;
     } catch (e) {
-      print(
-          'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$e');
+
       return [];
     }
   }
