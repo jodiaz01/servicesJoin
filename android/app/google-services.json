@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "808233820484",
+    "project_id": "noderestapi-542f5",
+    "storage_bucket": "noderestapi-542f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:808233820484:android:1a4b95a02d09c029bff711",
+        "android_client_info": {
+          "package_name": "com.example.ServiPro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "808233820484-mhlpn5btba1epmmi3trqc56a9vvksbvi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYg8EP-QT_DldHs1blsqAgpmdo87_SOmc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "808233820484-mhlpn5btba1epmmi3trqc56a9vvksbvi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
