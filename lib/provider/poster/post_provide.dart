@@ -18,7 +18,7 @@ class PostFormProvider extends ChangeNotifier {
   UserPost userPost = UserPost(
       id: 0,
       uid: 0,
-      cliente: [],
+      likes: [],
       titulo: '',
       descripcion: '',
       costo: 0,

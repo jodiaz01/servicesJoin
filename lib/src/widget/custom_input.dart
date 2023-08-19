@@ -8,7 +8,7 @@ class CustomInput {
       {required String hint, required String label, required IconData icon,required BuildContext context}) {
     final themeprovider = Provider.of<ThemeSetting>(context);
 
-     final Color color = themeprovider.currentTheme == ThemeData.dark() ? Colors.white.withOpacity(0.4) : Colors.black87;
+     final Color color = themeprovider.currentTheme == ThemeData.dark() || themeprovider.currentTheme.primaryColor == Colors.black ? Colors.white.withOpacity(0.4) : Colors.black87;
 
     return InputDecoration(
       border: OutlineInputBorder(

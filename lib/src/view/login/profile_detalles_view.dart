@@ -1,3 +1,4 @@
+import 'package:ServiPro/provider/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -5,10 +6,12 @@ import 'package:ServiPro/provider/user/detail_profile_provider.dart';
 import 'package:ServiPro/src/widget/custom_input.dart';
 
 class DetailsPefilView extends StatelessWidget {
-  DetailsPefilView({super.key, required this.userProvider, required this.tipo});
+  DetailsPefilView({super.key, required this.userProvider, required this.tipo,required this.themeprovider});
 
   DetailsFormProvider userProvider;
   final String tipo;
+  final ThemeSetting  themeprovider ;
+
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +23,12 @@ class DetailsPefilView extends StatelessWidget {
         key: userProvider.formKey,
         child: Wrap(
           children: [
-            const Center(
+             Center(
                 heightFactor: 2,
                 child: Text(
                   'Completar Registro ',
                   style: TextStyle(
+                    color: colorchanges() ,
                       fontFamily: 'georgia',
                       fontWeight: FontWeight.w700,
                       fontSize: 24,
@@ -34,6 +38,8 @@ class DetailsPefilView extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: TextFormField(
+                  style:TextStyle(color: colorchanges()),
+
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
                     userProvider.userDatails.servicio = value;
@@ -55,6 +61,7 @@ class DetailsPefilView extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: TextFormField(
+               style:TextStyle(color: colorchanges()),
                   keyboardType: TextInputType.multiline,
                   maxLines: 3,
                   onChanged: (value) {
@@ -79,6 +86,8 @@ class DetailsPefilView extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(3.0),
                   child: TextFormField(
+                    style:TextStyle(color: colorchanges()),
+
                     keyboardType: TextInputType.number,
                     onChanged: (dynamic entero) => userProvider
                         .userDatails.esperiencia = int.parse(entero),
@@ -101,6 +110,8 @@ class DetailsPefilView extends StatelessWidget {
                 width: screenSize.width * 0.55,
                 padding: const EdgeInsets.all(3.0),
                 child: TextFormField(
+                  style:TextStyle(color: colorchanges()),
+
                   keyboardType: TextInputType.text,
                   onChanged: (value) => userProvider.userDatails.tiempo = value,
                   validator: (value) {
@@ -120,6 +131,8 @@ class DetailsPefilView extends StatelessWidget {
               width: 175,
               padding: EdgeInsets.all(3.0),
               child: TextFormField(
+                style:TextStyle(color: colorchanges()),
+
                 keyboardType: TextInputType.phone,
                 onChanged: (value) => userProvider.userDatails.contacto = value,
                 validator: (value) {
@@ -139,6 +152,8 @@ class DetailsPefilView extends StatelessWidget {
               width: screenSize.width * 0.48,
               padding: const EdgeInsets.all(3.0),
               child: TextFormField(
+                style:TextStyle(color: colorchanges()),
+
                 keyboardType: TextInputType.phone,
                 onChanged: (value) =>
                     userProvider.userDatails.otro_contacto = value.toString(),
@@ -152,6 +167,8 @@ class DetailsPefilView extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: TextFormField(
+                style:TextStyle(color: colorchanges()),
+
                 keyboardType: TextInputType.multiline,
                 maxLines: 3,
                 onChanged: (value) =>
@@ -166,6 +183,8 @@ class DetailsPefilView extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: TextFormField(
+                style:TextStyle(color: colorchanges()),
+
                 keyboardType: TextInputType.text,
                 onChanged: (value) {
                   userProvider.userDatails.ciudad = value;
@@ -186,6 +205,8 @@ class DetailsPefilView extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: TextFormField(
+                style:TextStyle(color: colorchanges()),
+
                 keyboardType: TextInputType.text,
                 onChanged: (value) {
                   userProvider.userDatails.sector_barrio = value;
@@ -200,6 +221,8 @@ class DetailsPefilView extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: TextFormField(
+                style:TextStyle(color: colorchanges()),
+
                 keyboardType: TextInputType.text,
                 onChanged: (value) {
                   userProvider.userDatails.direcion_ubicacion = value;
@@ -221,6 +244,8 @@ class DetailsPefilView extends StatelessWidget {
               width: 150,
               padding: const EdgeInsets.all(3.0),
               child: DropdownButtonFormField(
+                style:TextStyle(color: Colors.green),
+
                 decoration: CustomInput.myInputStyles(
                     context: context,
                     hint: 'Genero',
@@ -246,6 +271,8 @@ class DetailsPefilView extends StatelessWidget {
               width: screenSize.width * 0.55,
               padding: EdgeInsets.all(2.0),
               child: TextFormField(
+                style:TextStyle(color: colorchanges()),
+
                 keyboardType: TextInputType.number,
                 onChanged: (dynamic valor) {
                   userProvider.userDatails.edad = int.parse(valor);
@@ -268,4 +295,6 @@ class DetailsPefilView extends StatelessWidget {
       ),
     );
   }
+
+  Color colorchanges() => themeprovider.currentTheme.primaryColor != Colors.black ? themeprovider.currentTheme.primaryColor : Colors.white.withOpacity(0.7);
 }

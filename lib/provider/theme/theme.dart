@@ -10,7 +10,7 @@ class ThemeSetting extends ChangeNotifier {
   bool _othermode = false;
   SharedPref pref = SharedPref();
 
-  int totalTheme = 5;
+  int totalTheme = 6;
 
   ///Todo Recuarda cada vez que agregue un tema incremetal el totaltheme
 
@@ -32,6 +32,9 @@ class ThemeSetting extends ChangeNotifier {
         break;
       case 5:
         _currentTheme = CustomTheme.aguilaTheme;
+        break;
+      case 6:
+        _currentTheme = CustomTheme.superBlack;
         break;
       default:
         break;
@@ -91,6 +94,12 @@ class ThemeSetting extends ChangeNotifier {
         pref.saveLocal('theme', numberTheme);
 
         break;
+      case 6:
+        _currentTheme = CustomTheme.superBlack;
+
+        pref.saveLocal('theme', numberTheme);
+
+        break;
       default:
         break;
     }
@@ -116,7 +125,7 @@ class CustomTheme {
   static ThemeData get yankkesTheme {
     //1
     return ThemeData(
-    primaryColor: AppColors.yankeeblue,
+      primaryColor: AppColors.yankeeblue,
       appBarTheme: const AppBarTheme(color: AppColors.yankeeblue),
       textTheme: const TextTheme(
         displayLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -130,13 +139,30 @@ class CustomTheme {
     //1
     return ThemeData(
       primaryColor: AppColors.aguilaColors,
-      appBarTheme: const AppBarTheme(
-        color:  AppColors.aguilaColors),
+      appBarTheme: const AppBarTheme(color: AppColors.aguilaColors),
       textTheme: const TextTheme(
         displayLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         titleLarge: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
         bodyMedium: TextStyle(fontSize: 14, fontFamily: 'georgia'),
       ),
+    );
+  }
+
+  static ThemeData get superBlack {
+    return ThemeData(
+
+        useMaterial3: true,
+        primaryColor: AppAllColors.black,
+        secondaryHeaderColor: AppColors.blackSuper,
+        appBarTheme: const AppBarTheme(color: AppColors.blackColor),
+        textTheme: const TextTheme(
+          displayMedium: TextStyle(
+              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+          displaySmall: TextStyle(
+              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+          displayLarge: TextStyle(
+              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
     );
   }
 }

@@ -49,14 +49,18 @@ class FormRegistro extends StatelessWidget {
             autovalidateMode: AutovalidateMode.always,
             key: userProvider.formkey,
             child: SingleChildScrollView(
-              physics: ClampingScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               child: Wrap(
                 children: [
-                  const Center(
+                  Center(
                       heightFactor: 3,
                       child: Text(
                         'Create una Cuenta',
                         style: TextStyle(
+                            color: themeprovider.currentTheme.primaryColor ==
+                                    Colors.black
+                                ? Colors.white.withOpacity(0.7)
+                                : themeprovider.currentTheme.primaryColor,
                             fontFamily: 'georgia',
                             fontWeight: FontWeight.w700,
                             fontSize: 24,
@@ -65,8 +69,9 @@ class FormRegistro extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(8.0),
                     child: DropdownButtonFormField(
-                      // menuMaxHeight: 150,
-
+                      style: const TextStyle(
+                        color: Colors.green,
+                      ),
                       decoration: CustomInput.myInputStyles(
                           context: context,
                           hint: 'Cuenta',
@@ -75,9 +80,16 @@ class FormRegistro extends StatelessWidget {
 
                       // icon: Icon(Icons.arrow_circle_down),
                       items: const [
-                        DropdownMenuItem(child: Text('Usuario'), value: 'U'),
                         DropdownMenuItem(
-                            child: Text('Facilitador'), value: 'F'),
+                            value: 'U',
+                            child: Text(
+                              'Usuario',
+                            )),
+                        DropdownMenuItem(
+                            value: 'F',
+                            child: Text(
+                              'Facilitador',
+                            )),
                       ],
                       onChanged: (String? value) =>
                           userProvider.usuarios.tipo = value!,
@@ -90,8 +102,9 @@ class FormRegistro extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      style: buildTextStyle(themeprovider),
                       keyboardType: TextInputType.text,
                       onChanged: (value) {
                         userProvider.usuarios.username = value;
@@ -110,8 +123,9 @@ class FormRegistro extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      style: buildTextStyle(themeprovider),
                       keyboardType: TextInputType.text,
                       onChanged: (value) {
                         userProvider.usuarios.firstName = value;
@@ -130,8 +144,9 @@ class FormRegistro extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      style: buildTextStyle(themeprovider),
                       keyboardType: TextInputType.text,
                       onChanged: (value) =>
                           userProvider.usuarios.lastName = value,
@@ -149,8 +164,9 @@ class FormRegistro extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      style: buildTextStyle(themeprovider),
                       keyboardType: TextInputType.emailAddress,
                       onChanged: (value) =>
                           userProvider.usuarios.email = value.toString(),
@@ -168,8 +184,9 @@ class FormRegistro extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      style: buildTextStyle(themeprovider),
                       keyboardType: TextInputType.visiblePassword,
                       onChanged: (value) =>
                           userProvider.usuarios.password = value.toString(),
@@ -188,22 +205,24 @@ class FormRegistro extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(
-                      child: CustomElevateButton(
-                        width: MediaQuery.of(context).size.width - 200,
-                        height: 70,
-                        color: Colors.blue,
-                        icon: Icon(Icons.fingerprint, size: 48,),
-                        text:'Huella Digital',
-                        function: () async {
-                          bool isok = false;
-                          isok = await fireProvider.authenticateAndSave();
-                          userProvider.usuarios.biometric = isok;
-                        },
-                      ),
-                    )
-                  ),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: CustomElevateButton(
+                          width: MediaQuery.of(context).size.width - 200,
+                          height: 70,
+                          color: Colors.blue,
+                          icon: const Icon(
+                            Icons.fingerprint,
+                            size: 48,
+                          ),
+                          text: 'Huella Digital',
+                          function: () async {
+                            bool isok = false;
+                            isok = await fireProvider.authenticateAndSave();
+                            userProvider.usuarios.biometric = isok;
+                          },
+                        ),
+                      )),
                   Padding(
                     padding:
                         const EdgeInsets.only(top: 8.0, left: 16, right: 16.0),
@@ -279,4 +298,9 @@ class FormRegistro extends StatelessWidget {
           )),
     );
   }
+
+  TextStyle buildTextStyle(ThemeSetting themeprovider) => TextStyle(
+      color: themeprovider.currentTheme.primaryColor == Colors.black
+          ? Colors.white.withOpacity(0.7)
+          : themeprovider.currentTheme.primaryColor);
 }

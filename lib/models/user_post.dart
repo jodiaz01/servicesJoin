@@ -7,7 +7,7 @@ enum PostAudience {
 class UserPost {
   int id;
   int? uid;// usaurio o servidor quien postea
-  List<String> ? cliente; // los cliente han marcado el post como favorito o su cliente de contacto
+  List<String> ? likes; // los cliente han marcado el post como favorito o su cliente de contacto
   String titulo;
   String descripcion;
   double ? costo;
@@ -20,7 +20,7 @@ class UserPost {
       {
         required this.id,
         this.uid,
-        this.cliente,
+        this.likes,
         required this.titulo,
         required this.descripcion,
         this.costo,
@@ -37,7 +37,7 @@ class UserPost {
     return UserPost(
       id: json?['id'],
       uid: json?['uid'],
-      cliente: json?['cliente'] is Iterable ? List.from(json?['cliente']):[],
+      likes: json?['likes'] is Iterable ? List.from(json?['likes']):[],
       titulo: json?['titulo'],
       descripcion: json?['descripcion'],
       costo: json?['costo'],
@@ -56,7 +56,7 @@ class UserPost {
     return {
       'id': id ?? 0,
       'uid': uid ?? 0,
-      'cliente': cliente??[],
+      'likes': likes??[],
       'titulo': titulo ?? '',
       'descripcion':descripcion ?? '',
       'costo': costo ?? 0,

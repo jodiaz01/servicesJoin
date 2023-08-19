@@ -68,7 +68,7 @@ class _ImageUploaderState extends State<ImageUploader> {
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         DetailsPefilView(
-          userProvider: userProvider,tipo: Tipo,
+          userProvider: userProvider,tipo: Tipo,themeprovider: themeprovider,
         ),
         const SizedBox(
           height: 12,

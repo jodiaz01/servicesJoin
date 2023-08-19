@@ -10,6 +10,7 @@ class AppColors {
 
   static const whiteColor = Color(0xFFFFFFFF);
   static const blackColor = Color(0xFF1D1617);
+  static const blackSuper = Color(0xff151414);
   static const grayColor = Color(0xFF7B6F72);
   static const lightGrayColor = Color(0xFFF7F8F8);
   static const midGrayColor = Color(0xFFADA4A5);
@@ -21,10 +22,22 @@ class AppColors {
   static const yankeeblue = Color(0xFF0C2340);
   static const aguilaColors = Color(0xFFD1900A);
 
+  static List<Color> get Raimbox => [
+    // Colors.white,
+    Colors.red,
+    Colors.orangeAccent,
+    Colors.yellow,
+    Colors.green,
+    Colors.blue,
+    Colors.purple,
+    Colors.purpleAccent
+
+  ];
   static List<Color> get primaryG => [primaryColor1, primaryColor2];
+
   static List<Color> get secondaryG => [secondaryColor1, secondaryColor2];
-  static List<Color> get thirdC =>
-      [Colors.deepOrange.withOpacity(0.5), primaryColor3];
+
+  static List<Color> get thirdC =>      [Colors.deepOrange.withOpacity(0.5), primaryColor3];
 }
 
 class AppAllColors {

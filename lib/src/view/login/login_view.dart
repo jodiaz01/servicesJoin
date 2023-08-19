@@ -44,11 +44,12 @@ class LoginView extends StatelessWidget {
                   key: provider.formkey,
                   child: Wrap(
                     children: [
-                      const Center(
+                       Center(
                           heightFactor: 3,
                           child: Text(
                             'Inicio Sesion',
                             style: TextStyle(
+                              color: themeprovider.currentTheme.primaryColor == AppAllColors.black ? Colors.white: themeprovider.currentTheme.primaryColor,
                                 fontFamily: 'georgia',
                                 fontWeight: FontWeight.w700,
                                 fontSize: 24,
@@ -57,6 +58,8 @@ class LoginView extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: TextFormField(
+                          style: TextStyle(color:themeprovider.currentTheme.primaryColor == AppAllColors.black ? Colors.white.withOpacity(0.7): themeprovider.currentTheme.primaryColor,),
+
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (value) => provider.email = value,
                           validator: (value) {
@@ -76,6 +79,7 @@ class LoginView extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: TextFormField(
+                          style: TextStyle(color:themeprovider.currentTheme.primaryColor == AppAllColors.black ? Colors.white.withOpacity(0.7): themeprovider.currentTheme.primaryColor,),
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
                           onChanged: (value) => provider.password = value,

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,7 +14,6 @@ import 'package:ServiPro/provider/theme/theme.dart';
 import 'package:ServiPro/router/routes.dart';
 import 'package:ServiPro/src/utils/datauser_comun.dart';
 import 'package:ServiPro/src/utils/navigateservice.dart';
-import 'package:ServiPro/src/widget/alertas.dart';
 import 'package:ServiPro/src/widget/custom_input.dart';
 import 'package:ServiPro/src/widget/customappbar.dart';
 import 'package:ServiPro/src/widget/custon_elevateButton.dart';
@@ -107,8 +105,9 @@ class _PostViewState extends State<PostView> {
                   Text(
                     nombre,
                     style: TextStyle(
-                      color: themeprovider.currentTheme.secondaryHeaderColor
-                          .withOpacity(0.5),
+                        color: themeprovider.currentTheme.primaryColor != Colors.black ? themeprovider.currentTheme.primaryColor : Colors.white.withOpacity(0.7),
+
+
                       fontSize: 12,
                     ),
                   )
@@ -172,7 +171,7 @@ class _PostViewState extends State<PostView> {
                     child: Text(
                   "Agrega Fotos & Videos",
                   style: GoogleFonts.aBeeZee(
-                      color: themeprovider.currentTheme.primaryColor,
+                      color: themeprovider.currentTheme.primaryColor != Colors.black ? themeprovider.currentTheme.primaryColor : Colors.white.withOpacity(0.7),
                       fontSize: 22,
                       fontWeight: FontWeight.bold),
                 )),
@@ -207,7 +206,8 @@ class _PostViewState extends State<PostView> {
                 child: Text(
               'Completar POST',
               style: GoogleFonts.pacifico(
-                  color: themeprovider.currentTheme.primaryColor, fontSize: 22),
+                  color: themeprovider.currentTheme.primaryColor != Colors.black ? themeprovider.currentTheme.primaryColor : Colors.white.withOpacity(0.7),
+                  fontSize: 22),
             )),
             Center(
               child: FormPost(
@@ -245,6 +245,7 @@ class FormPost extends StatelessWidget {
       child: Builder(builder: (context) {
         final provider = Provider.of<PostFormProvider>(context, listen: false);
         final postProvider = Provider.of<FirebasePost>(context, listen: false);
+        final themeprovider = Provider.of<ThemeSetting>(context, listen: false);
         void _onButtonPressed(BuildContext context) async {
           showDialog(
             context: context,
@@ -279,6 +280,7 @@ class FormPost extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
+                    style: buildTextStyle(themeprovider),
                     keyboardType: TextInputType.text,
                     onChanged: (value) => provider.userPost.titulo = value,
                     validator: (value) {
@@ -289,6 +291,7 @@ class FormPost extends StatelessWidget {
                       }
                     },
                     decoration: CustomInput.myInputStyles(
+
                         context: context,
                         hint: 'Titulo',
                         label: 'Nombre del  Post',
@@ -298,6 +301,8 @@ class FormPost extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
+                    style: buildTextStyle(themeprovider),
+
                     keyboardType: TextInputType.multiline,
                     maxLines: 3,
                     onChanged: (value) => provider.userPost.descripcion = value,
@@ -318,6 +323,8 @@ class FormPost extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
+                    style: buildTextStyle(themeprovider),
+
                     keyboardType: TextInputType.number,
                     onChanged: (dynamic value) {
                       final precio = double.parse(value);
@@ -333,6 +340,8 @@ class FormPost extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: DropdownButtonFormField(
+                    style: TextStyle(color: Colors.green),
+
                     decoration: CustomInput.myInputStyles(
                         context: context,
                         hint: 'Estado',
@@ -387,5 +396,8 @@ class FormPost extends StatelessWidget {
       }),
     );
   }
-
+  TextStyle buildTextStyle(ThemeSetting themeprovider) => TextStyle(
+      color: themeprovider.currentTheme.primaryColor == Colors.black
+          ? Colors.white.withOpacity(0.7)
+          : themeprovider.currentTheme.primaryColor);
 }

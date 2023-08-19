@@ -63,8 +63,8 @@ class PerfilView extends StatelessWidget {
                   Text(
                     nombre,
                     style: TextStyle(
-                      color: themeprovider.currentTheme.secondaryHeaderColor
-                          .withOpacity(0.5),
+                      color: themeprovider.currentTheme.secondaryHeaderColor == Colors.black ? themeprovider.currentTheme.secondaryHeaderColor: Colors.white.withOpacity(0.5)
+                          ,
                       fontSize: 12,
                     ),
                   )

@@ -4,6 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:ServiPro/provider/firebase/crud_fire_user.dart';
 import 'package:ServiPro/provider/theme/theme.dart';
@@ -15,6 +16,8 @@ import 'package:ServiPro/src/widget/animate_bottonav.dart';
 import 'package:ServiPro/src/widget/customappbar.dart';
 import 'package:ServiPro/src/widget/postcard/custom_post.dart';
 import 'package:ServiPro/src/widget/team_creator.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
+
 
 class HomePageView extends StatelessWidget {
   const HomePageView({super.key});
@@ -28,9 +31,11 @@ class HomePageView extends StatelessWidget {
     String tipo = '';
     String foto = '';
     String Completdado = '';
-    String userID = '';
+
     Color color = themeprovider.currentTheme.primaryColor;
     Color colorbac = Colors.amber;
+    Color cblack = Colors.black;
+
     if (cureenrthemcolor == AppColors.aguilaColors) {
       colorbac = Colors.amber;
     }
@@ -42,12 +47,11 @@ class HomePageView extends StatelessWidget {
     foto = get_userinformations(dataUser, 'foto');
     Completdado = get_userinformations(dataUser, 'perfil');
 
-    userID = get_userinformations(dataUser, 'uid');
     // getPostById(firebasePost);
     String avatar = '';
     return Scaffold(
       bottomNavigationBar:
-      CustomNavigationBar(0, _bottomNavigationKey, color, colorbac, foto),
+          CustomNavigationBar(0, _bottomNavigationKey, color, colorbac, foto),
       backgroundColor: themeprovider.currentTheme.primaryColor,
       body: CustomAppbar(
         elevation: getCurrentTheme(cureenrthemcolor) ? 0.2 : 0.09,
@@ -79,15 +83,31 @@ class HomePageView extends StatelessWidget {
                     ],
                   )
                 : Padding(
-                    padding: const EdgeInsets.only(left: 0, right: 250),
-                    child: Text(
-                      'Hi..! $user',
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'Georgia'),
+                    padding: const EdgeInsets.all(18),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Hi..! $user',
+                          style:  GoogleFonts.pacifico(
+                              color: Colors.white,
+                              fontSize: 18,
+                          //    fontFamily: 'Georgia'
+                          ),
+
+                        ), GradientText(
+                          colors:themeprovider.currentTheme.primaryColor != cblack && themeprovider.currentTheme.primaryColor != Colors.black ? [Colors.white,themeprovider.currentTheme.secondaryHeaderColor]:  AppColors.Raimbox,
+                          'Services Pro',
+                          style:  GoogleFonts.pacifico(
+                            fontSize: 22,
+                            //    fontFamily: 'Georgia'
+                          ),
+
+                        ),
+                      ],
                     ),
                   ),
+
         child: RefreshIndicator(
           color: Colors.white70,
           backgroundColor: themeprovider.currentTheme.primaryColor,
@@ -96,7 +116,7 @@ class HomePageView extends StatelessWidget {
             await firebasePost.readPoster();
           },
           child: ListView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.only(top: 0, bottom: 8),
             children: [
               Completdado == "NO" && tipo == 'F'
@@ -120,7 +140,7 @@ class HomePageView extends StatelessWidget {
                   : buildSingleChildScrollView(
                       dataUser, avatar, themeprovider, screenSize, context),
               firebasePost.dataPost.isNotEmpty
-                  ? buildColumnPost(firebasePost, themeprovider, context, user)
+                  ? buildColumnPost(firebasePost, themeprovider, context, user,dataUser.listPelfil.isNotEmpty ? dataUser.listPelfil.first['uid']: 0)
                   : const SizedBox(),
             ],
           ),
@@ -129,65 +149,70 @@ class HomePageView extends StatelessWidget {
     );
   }
 
+
   Column buildColumnPost(FirebasePost firebasePost, ThemeSetting themeprovider,
-      BuildContext context, String user) {
+      BuildContext context, String user, int uId) {
+
+    List<int> followingIds = firebasePost.Lsfollow
+        .where((follower) {
+          return follower['seguidorId'] ==uId;
+        })
+        .map<int>((follower) => follower['seguidoId'])
+        .toList();
+      // print(followingIds);
     return Column(
-      children: firebasePost.dataPost.reversed.map((e) {
-        List<dynamic> seguidoresList= [];
+      children: firebasePost.dataPost.reversed.map((post) {
+        bool isPublic = post['estado'] == 'public';
+        bool isForFollowers = post['estado'] == 'client';
 
-        seguidoresList= e['seguidores'];
+        if (isPublic) {
+          return buildInstagramPostCard(post, themeprovider, context, user, false, uId);
+        }  else if(( followingIds.contains(post['uid'])&& isForFollowers ) || post['uid']== uId) {
+          return buildInstagramPostCard(post, themeprovider, context, user, false, uId);
 
-        bool mesigue = seguidoresList.isNotEmpty && seguidoresList.contains(user);
-        bool isPublicOrNot = e['estado'] == 'public'  ? true : false;
-        bool isPrivateOrNot = e['estado'] == 'private'  ? true : false;
-        bool isForClientOrNot = e['estado'] == 'client'  ? true : false;
-
-        if (isPublicOrNot) {
-          return buildInstagramPostCard(e, themeprovider, context, user, mesigue);
-        } else if (isPrivateOrNot && user == e['usuario']) {
-          return buildInstagramPostCard(e, themeprovider, context, user, mesigue);
         }
-           else  if (isForClientOrNot && mesigue) {
-              return buildInstagramPostCard(e, themeprovider, context, user, mesigue);
-            } else {
-              return SizedBox();
-            }
 
-
+        else{
+          return const SizedBox();
+        }
       }).toList(),
     );
   }
 
-  InstagramPostCard buildInstagramPostCard(e, ThemeSetting themeprovider, BuildContext context, String user, bool isOneFollowers) {
-    return InstagramPostCard(
-        username: e['nombre'],
-        title: e['titulo'],
-        caption: e['descripcion'],
-        imageUrl:
-            e['img'].isNotEmpty ? e['img'] : ['https://fakeimg.pl/600x400'],
-        colorbtn: themeprovider.currentTheme.primaryColor,
-        avatar: e['avatar'].isNotEmpty
-            ? e['avatar'].last
-            : 'https://fakeimg.pl/600x400',
-        precio: double.parse(e['costo'].toString()),
-        onTap: () async {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => WachtProfileView(
-                userP: '${e["usuario"]}',
-              ),
-            ),
-          );
-        },
-        clienst: user,
-        idocuments: e['documents'],
-        isFollower: isOneFollowers,
-        // estado: e['estado'],
-        // isFollower: e['usuario'] == user ? true :false ,
-      );
-  }
+  InstagramPostCard buildInstagramPostCard(e, ThemeSetting themeprovider,
+      BuildContext context, String user, bool isOneFollowers, userId) {
 
+    return InstagramPostCard(
+      name: e['nombre'],
+      // name: e['nombre']+e['uid'].toString()+ e['estado'],
+      title: e['titulo'],
+      caption: e['descripcion'],
+      imageUrl: e['img'].isNotEmpty ? e['img'] : ['https://fakeimg.pl/600x400'],
+      colorbtn: themeprovider.currentTheme.primaryColor ,
+      avatar: e['avatar'].isNotEmpty
+          ? e['avatar'].last
+          : 'https://fakeimg.pl/600x400',
+      precio: double.parse(e['costo'].toString()),
+      onTap: () async {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WachtProfileView(
+              userP: '${e["usuario"]}',
+            ),
+          ),
+        );
+      },
+      clienst: user,
+      idocuments: e['documents'],
+      follow: e['usuario'],
+      idList: [e['uid'].toString(), userId.toString()],
+
+      isFollower: isOneFollowers,
+      // estado: e['estado'],
+      // isFollower: e['usuario'] == user ? true :false ,
+    );
+  }
 
   SingleChildScrollView buildSingleChildScrollView(
       FirebaseProvider dataUser,
