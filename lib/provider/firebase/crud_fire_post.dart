@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:ServiPro/models/follower_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:ServiPro/conexion/server.dart';
@@ -17,6 +19,8 @@ class FirebasePost extends ChangeNotifier {
 
   Future<bool> addPostofire(UserPost poster, BuildContext context, int uidkey,
       List<File> filePath) async {
+
+
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Procesando ... '),
       duration: Duration(seconds: 60),

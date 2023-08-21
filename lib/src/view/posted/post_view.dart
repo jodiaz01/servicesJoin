@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -105,9 +108,10 @@ class _PostViewState extends State<PostView> {
                   Text(
                     nombre,
                     style: TextStyle(
-                        color: themeprovider.currentTheme.primaryColor != Colors.black ? themeprovider.currentTheme.primaryColor : Colors.white.withOpacity(0.7),
-
-
+                      color: themeprovider.currentTheme.primaryColor !=
+                              Colors.black
+                          ? themeprovider.currentTheme.primaryColor
+                          : Colors.white.withOpacity(0.7),
                       fontSize: 12,
                     ),
                   )
@@ -171,7 +175,10 @@ class _PostViewState extends State<PostView> {
                     child: Text(
                   "Agrega Fotos & Videos",
                   style: GoogleFonts.aBeeZee(
-                      color: themeprovider.currentTheme.primaryColor != Colors.black ? themeprovider.currentTheme.primaryColor : Colors.white.withOpacity(0.7),
+                      color: themeprovider.currentTheme.primaryColor !=
+                              Colors.black
+                          ? themeprovider.currentTheme.primaryColor
+                          : Colors.white.withOpacity(0.7),
                       fontSize: 22,
                       fontWeight: FontWeight.bold),
                 )),
@@ -206,7 +213,9 @@ class _PostViewState extends State<PostView> {
                 child: Text(
               'Completar POST',
               style: GoogleFonts.pacifico(
-                  color: themeprovider.currentTheme.primaryColor != Colors.black ? themeprovider.currentTheme.primaryColor : Colors.white.withOpacity(0.7),
+                  color: themeprovider.currentTheme.primaryColor != Colors.black
+                      ? themeprovider.currentTheme.primaryColor
+                      : Colors.white.withOpacity(0.7),
                   fontSize: 22),
             )),
             Center(
@@ -234,9 +243,11 @@ class FormPost extends StatelessWidget {
   final String forenkey;
   final List<File> imagenesList;
 
-  const FormPost({super.key, required this.color, required this.forenkey, required this.imagenesList});
-
-
+  const FormPost(
+      {super.key,
+      required this.color,
+      required this.forenkey,
+      required this.imagenesList});
 
   @override
   Widget build(BuildContext context) {
@@ -247,28 +258,44 @@ class FormPost extends StatelessWidget {
         final postProvider = Provider.of<FirebasePost>(context, listen: false);
         final themeprovider = Provider.of<ThemeSetting>(context, listen: false);
         void _onButtonPressed(BuildContext context) async {
-          showDialog(
-            context: context,
-            barrierDismissible: false, // Impide que el diálogo se cierre al tocar fuera de él
-            builder: (BuildContext context) {
-              return const Center(
+          if (provider.userPost.titulo.isEmpty ||
+              provider.userPost.descripcion.isEmpty ) {
+            showCupertinoDialog(
+              context: context,
+              barrierDismissible: true,
+              // Impide que el diálogo se cierre al tocar fuera de él
+              builder: (BuildContext context) {
+                return const CupertinoAlertDialog(
+                  title: Text('Error'),
+                  content: Text('Complete el Post Campos en Rojo e Imagen'),
+                );
+              },
+            );
 
-                child: SpinKitFadingCircle(
-                  // duration: Duration(seconds: 20),
-                  color: Colors.blue, // Color del indicador de carga
-                  size: 50.0, // Tamaño del indicador de carga
-                ),
-              );
-            },
-          );
+            return;
+          } else {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              // Impide que el diálogo se cierre al tocar fuera de él
+              builder: (BuildContext context) {
+                return const Center(
+                  child: SpinKitFadingCircle(
+                    // duration: Duration(seconds: 20),
+                    color: Colors.blue, // Color del indicador de carga
+                    size: 50.0, // Tamaño del indicador de carga
+                  ),
+                );
+              },
+            );
 
-
-          bool isOk = await postProvider.addPostofire(
-              provider.userPost, (context), int.parse(forenkey),imagenesList );
-
-          if (isOk){
-            Navigator.pop(context);
-            NavigationService.moveTo(ServiceRouter.home);
+            // bool isOk = await postProvider.addPostofire(provider.userPost,
+            //     (context), int.parse(forenkey), imagenesList);
+  bool isOk=false;
+            if (isOk) {
+              Navigator.pop(context);
+              NavigationService.moveTo(ServiceRouter.home);
+            }
           }
         }
 
@@ -291,7 +318,6 @@ class FormPost extends StatelessWidget {
                       }
                     },
                     decoration: CustomInput.myInputStyles(
-
                         context: context,
                         hint: 'Titulo',
                         label: 'Nombre del  Post',
@@ -302,7 +328,6 @@ class FormPost extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
                     style: buildTextStyle(themeprovider),
-
                     keyboardType: TextInputType.multiline,
                     maxLines: 3,
                     onChanged: (value) => provider.userPost.descripcion = value,
@@ -324,11 +349,10 @@ class FormPost extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
                     style: buildTextStyle(themeprovider),
-
                     keyboardType: TextInputType.number,
                     onChanged: (dynamic value) {
                       final precio = double.parse(value);
-                      provider.userPost.costo =precio;
+                      provider.userPost.costo = precio;
                     },
                     decoration: CustomInput.myInputStyles(
                         context: context,
@@ -340,7 +364,7 @@ class FormPost extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: DropdownButtonFormField(
-                    style: TextStyle(color: Colors.green),
+                    style: const TextStyle(color: Colors.green),
 
                     decoration: CustomInput.myInputStyles(
                         context: context,
@@ -372,8 +396,8 @@ class FormPost extends StatelessWidget {
                     backgroundColor: color,
                     icon: const Icon(Icons.share),
                     label: const Text('Compartir'),
-                    onPressed: ()  {
-                       _onButtonPressed(context);
+                    onPressed: () {
+                      _onButtonPressed(context);
                       // bool isOk = await postProvider.addPostofire(
                       //     provider.userPost, (context), int.parse(forenkey));
                       // // bool isOk =
@@ -396,6 +420,7 @@ class FormPost extends StatelessWidget {
       }),
     );
   }
+
   TextStyle buildTextStyle(ThemeSetting themeprovider) => TextStyle(
       color: themeprovider.currentTheme.primaryColor == Colors.black
           ? Colors.white.withOpacity(0.7)
